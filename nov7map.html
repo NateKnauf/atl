@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .container { position:relative; padding:0 0 0 0px; }
+        #sidebar {
+            position:absolute;
+            top:0; bottom:0; right:0;
+            height:100%;
+            width:20%;
+        }
+
+        #header { width:80%; height:50px;
+            margin:0 0 5px 0;
+        }
+        #content { width:80%; height:100%;
+            margin:5px 0 5px 0;
+        }
+        #footer { width:100px; height:20px;
+            margin:5px 0 0 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="imageloader.min.js"></script>
+    <script type="text/javascript" src="canvaszoom.min.js"></script>
+
+    <script>
+    var candidates = ['PeterAman', 'RohitAmmanamanchi', 'KeishaLanceBottoms',
+        'JohnEaves', 'VincentFort', 'KwanzaHall', 'CeasarMitchell',
+         'MaryNorwood', 'MichaelSterling', 'CathyWoolard',
+          'GlennWrightson', 'Map'];
+
+    function loadIt() {
+        fields = document.getElementById('fields');
+        fields.innerHTML = "";
+        for (can in candidates) {
+            fields.innerHTML += '<div><input type="checkbox" id="'+candidates[can]+'" checked=True onclick="renderPage()">'+candidates[can]+'</input></div>'
+        }
+        renderPage();
+    }
+
+
+    function renderPage() {
+        console.log("yo")
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //var imgs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (c in candidates) {
+            console.log(document.getElementById(candidates[c]).checked);
+            if (document.getElementById(candidates[c]).checked) {
+                var img = new Image();
+                img.src = "img/" + candidates[c] + ".png";
+                img.onload = function() {
+                    console.log(this);
+                    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+                    console.log("drawn");
+                }
+            }
+        }
+    }
+
+    </script>
+</head>
+<body onload="loadIt()">
+
+    <div class="container">
+        <div id="sidebar">
+            <fieldset id="fields">
+              <legend>Layers to render</legend>
+              <div>
+                <input type="checkbox" id="VincentFort" onclick="renderPage()">Vincent Fort</input>
+              </div>
+              <div>
+                <input type="checkbox" id="music">music</input>
+              </div>
+            </fieldset>
+        </div>
+        <div id="header">
+            <h1>Atlanta Nov 7 Election</h3>
+        </div>
+        <div id="content">
+            <canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;">
+            Your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+        <div id="footer"></div>
+    </div>
+
+</body>
+</html>
